@@ -4,7 +4,4 @@
    <FileRef
       location = "group:imglyKit.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Examples/iOS Example.xcodeproj">
-   </FileRef>
 </Workspace>
