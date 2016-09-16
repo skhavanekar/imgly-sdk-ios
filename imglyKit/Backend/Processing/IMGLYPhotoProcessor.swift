@@ -97,7 +97,7 @@ public class IMGLYPhotoProcessor {
             currentImage = filter.outputImage
         }
         
-        if let currentImage = currentImage where CGRectIsEmpty(currentImage.extent) {
+        if let currentImage = currentImage {
             return nil
         }
         
@@ -120,7 +120,7 @@ public class IMGLYPhotoProcessor {
     #elseif os(OSX)
 
     public class func processWithNSImage(image: NSImage, filters: [CIFilter]) -> NSImage? {
-        if let tiffRepresentation = image.TIFFRepresentation, image = CIImage(data: tiffRepresentation) {
+        if let tiffRepresentation = image.TIFFRepresentation, let image = CIImage(data: tiffRepresentation) {
             let filteredCIImage = processWithCIImage(image, filters: filters)
             
             if let filteredCIImage = filteredCIImage {

@@ -125,7 +125,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         
         let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
         navigationItem.title = NSLocalizedString("main-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: #selector(IMGLYMainEditorViewController.cancelTapped(_:)))
         
         navigationController?.delegate = self
         
@@ -265,7 +265,7 @@ extension IMGLYMainEditorViewController: UICollectionViewDataSource {
         if let buttonCell = cell as? IMGLYButtonCollectionViewCell {
             let actionButton = actionButtons[indexPath.item]
             
-            if let selectedImage = actionButton.selectedImage, let showSelectionBlock = actionButton.showSelection {
+            if let selectedImage = actionButton.selectedImage, let _ = actionButton.showSelection {
                 buttonCell.imageView.image = selectedImage
             } else {
                 buttonCell.imageView.image = actionButton.image
