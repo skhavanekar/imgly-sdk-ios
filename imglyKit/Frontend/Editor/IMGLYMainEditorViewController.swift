@@ -38,7 +38,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     // MARK: - Properties
     
     public lazy var actionButtons: [IMGLYActionButton] = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
         var handlers = [IMGLYActionButton]()
         
         handlers.append(
@@ -47,7 +47,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
                 image: UIImage(named: "icon_option_magic", inBundle: bundle, compatibleWithTraitCollection: nil),
                 selectedImage: UIImage(named: "icon_option_magic_active", inBundle: bundle, compatibleWithTraitCollection: nil),
                 handler: { [unowned self] in self.subEditorButtonPressed(.Magic) },
-                showSelection: { [unowned self] in return self.fixedFilterStack.enhancementFilter.enabled }))
+                showSelection: { [unowned self] in return true }))
         
         handlers.append(
             IMGLYActionButton(
@@ -123,7 +123,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
         navigationItem.title = NSLocalizedString("main-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
         
@@ -163,7 +163,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     private func subEditorButtonPressed(buttonType: IMGLYMainMenuButtonType) {
         if (buttonType == IMGLYMainMenuButtonType.Magic) {
             if !updating {
-                fixedFilterStack.enhancementFilter.enabled = !fixedFilterStack.enhancementFilter.enabled
+                fixedFilterStack.enhancementFilter.filterEnabled = !fixedFilterStack.enhancementFilter.filterEnabled
                 updatePreviewImage()
             }
         } else {
@@ -265,7 +265,7 @@ extension IMGLYMainEditorViewController: UICollectionViewDataSource {
         if let buttonCell = cell as? IMGLYButtonCollectionViewCell {
             let actionButton = actionButtons[indexPath.item]
             
-            if let selectedImage = actionButton.selectedImage, let showSelectionBlock = actionButton.showSelection where showSelectionBlock() {
+            if let selectedImage = actionButton.selectedImage, let showSelectionBlock = actionButton.showSelection {
                 buttonCell.imageView.image = selectedImage
             } else {
                 buttonCell.imageView.image = actionButton.image
